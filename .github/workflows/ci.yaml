@@ -70,7 +70,7 @@ jobs:
           failure-threshold: fatal
 
       - name: Upload Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: Dockle Report
