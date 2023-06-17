@@ -4,6 +4,7 @@ FROM --platform=$BUILDPLATFORM ubuntu:22.04 AS build
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 ARG VERSION="0.2.3"
+ARG TARGET_MCU="esp32"
 
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
@@ -14,11 +15,11 @@ RUN \
     ca-certificates=20230311ubuntu0.22.04.1 \
     wget=1.21.2-2ubuntu1
 
-RUN wget --no-verbose --show-progress --progress=dot:mega https://github.com/igrr/mkspiffs/releases/download/${VERSION}/mkspiffs-${VERSION}-arduino-esp32-linux64.tar.gz \
-    && wget --no-verbose --show-progress --progress=dot:mega https://github.com/igrr/mkspiffs/releases/download/${VERSION}/mkspiffs-${VERSION}-arduino-esp32-linux64.tar.gz.sha256.txt \
-    && awk '{print $3 "  " $1}' mkspiffs-${VERSION}-arduino-esp32-linux64.tar.gz.sha256.txt | sha256sum -c \
-    && tar -xvf mkspiffs-${VERSION}-arduino-esp32-linux64.tar.gz \
-    && mv mkspiffs-${VERSION}-arduino-esp32-linux64/mkspiffs /usr/bin \
+RUN wget --no-verbose --show-progress --progress=dot:mega https://github.com/igrr/mkspiffs/releases/download/${VERSION}/mkspiffs-${VERSION}-arduino-${TARGET_MCU}-linux64.tar.gz \
+    && wget --no-verbose --show-progress --progress=dot:mega https://github.com/igrr/mkspiffs/releases/download/${VERSION}/mkspiffs-${VERSION}-arduino-${TARGET_MCU}-linux64.tar.gz.sha256.txt \
+    && awk '{print $3 "  " $1}' mkspiffs-${VERSION}-arduino-${TARGET_MCU}-linux64.tar.gz.sha256.txt | sha256sum -c \
+    && tar -xvf mkspiffs-${VERSION}-arduino-${TARGET_MCU}-linux64.tar.gz \
+    && mv mkspiffs-${VERSION}-arduino-${TARGET_MCU}-linux64/mkspiffs /usr/bin \
     && chmod +x /usr/bin/mkspiffs
 
 
