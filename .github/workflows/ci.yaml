@@ -27,6 +27,13 @@ jobs:
           dockerfile: Dockerfile
 
   build-push:
+    strategy:
+      matrix:
+        version:
+          - full: 0.2.3
+            major: 0
+            minor: 2
+        target_mcu: [esp8266, esp32]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -50,6 +57,10 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
+            type=raw,enable={{is_default_branch}},value=${{ matrix.target_mcu }}-${{ matrix.version.full }}
+            type=raw,enable={{is_default_branch}},value=${{ matrix.target_mcu }}-${{ matrix.version.major }}.${{ matrix.version.minor }}
+            type=raw,enable={{is_default_branch}},value=${{ matrix.target_mcu }}-${{ matrix.version.major }}
+            type=raw,enable={{is_default_branch}},value=${{ matrix.target_mcu }}-latest
             type=sha
 
       - name: Set up QEMU
@@ -73,6 +84,9 @@ jobs:
           file: Dockerfile
           load: true
           tags: ${{ env.TEST_TAG }}
+          build-args: |
+            TARGET_MCU=${{ matrix.target_mcu }}
+            VERSION=${{ matrix.version.full }}
 
       - name: Test
         run: |
@@ -111,6 +125,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
+          build-args: |
+            TARGET_MCU=${{ matrix.target_mcu }}
+            VERSION=${{ matrix.version.full }}
 
       - name: slack-notification-success
         if: ${{ success() }}
