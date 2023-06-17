@@ -8,6 +8,7 @@ ARG TARGET_MCU="esp32"
 
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
+RUN rm -f /etc/apt/apt.conf.d/docker-clean
 RUN \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
