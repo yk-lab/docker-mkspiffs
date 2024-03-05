@@ -62,6 +62,13 @@ jobs:
             type=raw,enable={{is_default_branch}},value=${{ matrix.target_mcu }}-${{ matrix.version.major }}
             type=raw,enable={{is_default_branch}},value=${{ matrix.target_mcu }}-latest
             type=sha
+          # generate Docker labels based on the following events/attributes
+          # labels: |
+          #   maintainer=yk-lab
+          #   org.opencontainers.image.title=mkspiffs ver. ${{ matrix.version.full }}
+          #   org.opencontainers.image.description=mkspiffs for ${{ matrix.target_mcu }}, ver. ${{ matrix.version.full }}.
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -139,6 +146,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
+          outputs: ${{ steps.meta.outputs }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           build-args: |
             TARGET_MCU=${{ matrix.target_mcu }}
