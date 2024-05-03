@@ -13,8 +13,8 @@ RUN \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates=20230311ubuntu0.22.04.1 \
-    wget=1.21.2-2ubuntu1
+    ca-certificates=20240203 \
+    wget=1.21.4-1ubuntu4
 
 RUN wget --no-verbose --show-progress --progress=dot:mega https://github.com/igrr/mkspiffs/releases/download/${VERSION}/mkspiffs-${VERSION}-arduino-${TARGET_MCU}-linux64.tar.gz \
     && wget --no-verbose --show-progress --progress=dot:mega https://github.com/igrr/mkspiffs/releases/download/${VERSION}/mkspiffs-${VERSION}-arduino-${TARGET_MCU}-linux64.tar.gz.sha256.txt \
