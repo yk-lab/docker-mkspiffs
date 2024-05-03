@@ -24,6 +24,6 @@ RUN wget --no-verbose --show-progress --progress=dot:mega https://github.com/igr
     && chmod +x /usr/bin/mkspiffs
 
 
-FROM gcr.io/distroless/cc-debian11:nonroot
+FROM gcr.io/distroless/cc-debian12:nonroot
 
 COPY --from=build /usr/bin/mkspiffs /usr/bin/mkspiffs
