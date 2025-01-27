@@ -6,6 +6,14 @@ ARG BUILDPLATFORM
 ARG VERSION="0.2.3"
 ARG TARGET_MCU="esp32"
 
+LABEL org.opencontainers.image.authors="yk-lab <yk-lab@users.noreply.github.com>" \
+      org.opencontainers.image.url="https://github.com/yk-lab/docker-mkspiffs" \
+      org.opencontainers.image.documentation="https://github.com/yk-lab/docker-mkspiffs" \
+      org.opencontainers.image.source="https://github.com/yk-lab/docker-mkspiffs" \
+      org.opencontainers.image.vendor="yk-lab" \
+      org.opencontainers.image.title="mkspiffs ver. ${VERSION}" \
+      org.opencontainers.image.description="mkspiffs for ${TARGET_MCU}, ver. ${VERSION}."
+
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
