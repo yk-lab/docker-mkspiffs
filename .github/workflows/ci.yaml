@@ -115,7 +115,7 @@ jobs:
           failure-threshold: fatal
 
       - name: Upload Report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: Dockle Report ${{ matrix.target_mcu }}
